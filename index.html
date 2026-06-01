@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #fed6e3 0%, #a8edea 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* နာမည်မေးတဲ့ Box */
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 100;
+            transition: all 0.5s ease;
+        }
+
+        .login-box h2 {
+            color: #ff6b81;
+            margin-bottom: 15px;
+        }
+
+        .login-box input {
+            padding: 10px 15px;
+            width: 80%;
+            border: 2px solid #ffb6c1;
+            border-radius: 25px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+        }
+
+        .login-box button {
+            padding: 10px 25px;
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Surprise ပြမယ့် Main Content */
+        .main-content {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4757;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        p {
+            color: #57606f;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* HTML/CSS ဖြင့် ကိတ်မုန့်ပုံဖော်ခြင်း (Link ပြတ်တောက်မှု မရှိစေရန်) */
+        .cake-container {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            margin: 40px auto 15px auto;
+            width: 200px;
+        }
+
+        /* ကိတ်မုန့် အလွှာ */
+        .cake-tier {
+            width: 160px;
+            height: 90px;
+            background: #f190b7;
+            border-radius: 15px 15px 5px 5px;
+            position: relative;
+            box-shadow: inset 0 10px 0 #ffb6c1, 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .cake-tier::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            background: #fff;
+            top: 40px;
+            left: 0;
+        }
+
+        /* ဖယောင်းတိုင် */
+        .candle {
+            width: 12px;
+            height: 45px;
+            background: linear-gradient(to right, #eccc68, #ffa502);
+            position: absolute;
+            top: -45px;
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* ဖယောင်းတိုင်မီးတောက် */
+        .flame {
+            width: 16px;
+            height: 24px;
+            background: #ff7f50;
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -28px;
+            left: -2px;
+            animation: flicker 0.1s ease-in-out infinite alternate;
+            box-shadow: 0 0 10px #ff7f50, 0 0 20px #ffa502;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        .wish-text {
+            font-size: 0.9rem;
+            color: #ff6b81;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* မီးပုံးပျံ (Balloon) Effect */
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 65px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            z-index: 1;
+            animation: floatUp 6s linear forwards;
+            bottom: -100px;
+        }
+
+        .balloon::after {
+            content: "🎈";
+            font-size: 50px;
+            position: absolute;
+            top: 0; left: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+        /* ကွန်ဖက်တီ (Confetti) */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            z-index: 2;
+            animation: confettiFall 4s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box" id="loginBox">
+        <h2>ဒီနေ့ ဘယ်သူ့မွေးနေ့လဲဟင်? 🎂</h2>
+        <input type="text" id="nameInput" placeholder="နာမည်လေး ရေးပေးပါ..." required>
+        <br>
+        <button onclick="showSurprise()">ဖွင့်ကြည့်မယ် ✨</button>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <h1 id="greeting">Happy Birthday! 🎉</h1>
+        <p>ဒီနေ့ကစပြီး လိုအင်ဆန္ဒတွေအကုန် ပြည့်ဝပါစေနော်။ 💖</p>
+        
+        <div class="cake-container" onclick="blowCandle()">
+            <div class="candle" id="candleId">
+                <div class="flame" id="flameId"></div>
+            </div>
+            <div class="cake-tier"></div>
+            <p class="wish-text" id="cakeTip">✨ ကိတ်မုန့်ကိုနှိပ်ပြီး ဖယောင်းတိုင်မီးမှုတ်ပါ ✨</p>
+        </div>
+    </div>
+
+    <script>
+        function showSurprise() {
+            const name = document.getElementById('nameInput').value.trim();
+            
+            if (name === "") {
+                alert("နာမည်လေးတော့ ရိုက်ထည့်ပေးပါဦးနော်။ 😘");
+                return;
+            }
+
+            document.getElementById('loginBox').style.display = 'none';
+
+            const mainContent = document.getElementById('mainContent');
+            mainContent.style.display = 'block';
+            setTimeout(() => { mainContent.style.opacity = '1'; }, 50);
+
+            document.getElementById('greeting').innerHTML = `Happy Birthday, ${name}! 🥳🎉`;
+
+            setInterval(createBalloon, 400);
+            setInterval(createConfetti, 100);
+        }
+
+        // ဖယောင်းတိုင် မှုတ်တဲ့ Function
+        function blowCandle() {
+            // မီးတောက်ကို ဖျောက်လိုက်မယ်
+            const flame = document.getElementById('flameId');
+            if (flame) {
+                flame.style.display = 'none';
+            }
+            
+            // စာသားပြောင်းမယ်
+            document.getElementById('cakeTip').innerHTML = "ဝါးးး ဖယောင်းတိုင် မီးမှုတ်လိုက်ပြီ! 🎉 ရာသက်ပန် ပျော်ရွှင်ပါစေဗျာ။ 🎂✨";
+            
+            // ကွန်ဖက်တီတွေ အများကြီး ပိုကျလာအောင် လုပ်မယ်
+            for(let i=0; i<60; i++) {
+                setTimeout(createConfetti, i * 40);
+            }
+        }
+
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.style.left = Math.random() * 100 + 'vw';
+            balloon.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.body.appendChild(balloon);
+
+            setTimeout(() => { balloon.remove(); }, 7000);
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            
+            const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#eccc68', '#ff6b81'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            confetti.style.width = Math.random() * 8 + 6 + 'px';
+            confetti.style.height = Math.random() * 12 + 6 + 'px';
+            confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+            
+            document.body.appendChild(confetti);
+
+            setTimeout(() => { confetti.remove(); }, 4000);
+        }
+    </script>
+</body>
+</html>
